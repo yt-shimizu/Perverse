@@ -31,17 +31,16 @@ pip install -r pyp_list.txt
 
 ### migrate
 ```
+python manage.py makemigrations
 python manage.py migrate
-```
-
-### run server
-```
-python manage.py runserver
-```
-
-### 管理サイト
-```
 python manage.py createsuperuser // 管理ユーザ作成
+python manage.py get_spot_data
+python manage.py loaddata spot_data // Spotデータ作成
+```
 
-python manage.py runserver // http://127.0.0.1:8000/admin/
+### runserver
+```
+# http://127.0.0.1:8000/app/
+# http://127.0.0.1:8000/admin/
+python manage.py runserver
 ```
