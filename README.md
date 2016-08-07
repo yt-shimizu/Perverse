@@ -39,3 +39,9 @@ python manage.py migrate
 python manage.py runserver
 ```
 
+### 管理サイト
+```
+python manage.py createsuperuser // 管理ユーザ作成
+
+python manage.py runserver // http://127.0.0.1:8000/admin/
+```
