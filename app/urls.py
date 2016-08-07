@@ -6,4 +6,3 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^api/', include(apis.router.urls)),
 ]
-
