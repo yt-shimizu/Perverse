@@ -3,7 +3,7 @@ from django.core.management.base import BaseCommand, CommandError
 
 class Command(BaseCommand):
     URL = 'http://mob.tpj.co.jp/mob/api/records/121'
-    FILE = 'app/fixtures/spot_data.json'
+    FILE = 'app/fixtures/initial_data.json'
 
     def handle(self, *args, **options):
             data = requests.get(self.URL).json()
@@ -22,7 +22,7 @@ class Command(BaseCommand):
                     "name": o['名称']
                 },
                 "model": "app.spot",
-                "pk_cnt": i + 1
+                "pk": i + 1
             })
         return ary
 

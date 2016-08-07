@@ -2,5 +2,5 @@ __pycache__/
 *.py[cod]
 node_modules
 statis/js/*.js
-spot_data.json
+initial_data.json
 
