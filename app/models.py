@@ -14,7 +14,7 @@ class Spot(models.Model):
 class Count(models.Model):
     """発見人数"""
     spot = models.ForeignKey(Spot, verbose_name='スポット', related_name='spot')
-    ipaddr = models.CharField('ipアドレス', max_length=255)
+    ipaddr = models.CharField('ipアドレス', max_length=255, unique=True)
 
     def __str__(self):
         return self.ipaddr
