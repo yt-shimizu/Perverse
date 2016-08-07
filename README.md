@@ -34,7 +34,8 @@ pip install -r pyp_list.txt
 python manage.py makemigrations
 python manage.py migrate
 python manage.py createsuperuser // 管理ユーザ作成
-python manage.py loaddata initial_data // Spotデータ作成
+python manage.py get_spot_data
+python manage.py loaddata spot_data // Spotデータ作成
 ```
 
 ### runserver
