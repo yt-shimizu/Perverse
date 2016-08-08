@@ -1,4 +1,35 @@
 $(function() {
+
+    function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie != '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+              var cookie = jQuery.trim(cookies[i]);
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        crossDomain: false, // obviates need for sameOrigin test
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type)) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
     var canvas = $('#map-canvas').get(0);
     var latlng = new google.maps.LatLng(35.792621 , 139.806513);
     var mapOptions = {
@@ -43,17 +74,32 @@ $(function() {
                         // 現在位置からの距離が 500m 以内かつ 発見回数が 5回 未満の場合エリア表示
                         console.log(val.count);
                         if (distance <= 1.5 && val.count < 20) {
+                          var color = '#ffffff';
+                          switch(true) {
+                            case val.count > 5:
+                              color = '#FF1493'
+                            break;
+                            case val.count > 4:
+                              color = '#FFDAB9'
+                            break;
+                            case val.count > 3:
+                              color = '#FFF8DC'
+                            break;
+                            default:
+                              color = '#00BFFF'
+                            break;
+                          }
                             var infowindow = new google.maps.InfoWindow({});
                             var marker = new google.maps.Marker({
                                     map: map
                                 });
                             var spotCircle = new google.maps.Circle({
                                 　　　 center: spotPos,       // 中心点(google.maps.LatLng)
-                                      fillColor: '#ff0000',   // 塗りつぶし色
+                                      fillColor: color,   // 塗りつぶし色
                                       fillOpacity: 0.5,       // 塗りつぶし透過度（0: 透明 ⇔ 1:不透明）
                                       map: map,             // 表示させる地図（google.maps.Map）
                                       radius: 50,          // 半径（ｍ）
-                                      strokeColor: '#ff0000', // 外周色
+                                      strokeColor: color, // 外周色
                                       strokeOpacity: 1,       // 外周透過度（0: 透明 ⇔ 1:不透明）
                                       strokeWeight: 1,         // 外周太さ（ピクセル）
                                       title: val.name,
@@ -190,4 +236,5 @@ $(function() {
             });
         }, 1000);
     }
+
 });
