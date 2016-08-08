@@ -104,13 +104,14 @@ $(function() {
                                       strokeWeight: 1,         // 外周太さ（ピクセル）
                                       title: val.name,
                                       count: val.count,
-                                      id: val.id
+                                      id: val.id,
+                                      description: val.description
                                 });
                             circle_list.push(spotCircle);
                             google.maps.event.addListener(spotCircle, 'mouseover', function () {
                                 if (typeof this.title !== "undefined") {
                                     marker.setPosition(this.getCenter());
-                                    infowindow.setContent("<b>" + this.title + "</b><br><b>発見人数：" + this.count + "</b>");
+                                    infowindow.setContent("<b>" + this.title + "</b><br><b>発見人数：" + this.count + "</b><br><b>説明：" + this.description + "</b>");
                                     infowindow.open(map, marker);
                                     marker.setVisible(false);
                                 }
