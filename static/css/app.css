@@ -1,5 +1,14 @@
 html, body {
   height: 100%;
+  margin: 0;
+  background-color: #000;
+}
+
+h1 {
+  background-color: #000;
+  color: #FFF;
+  margin: 0;
+  text-align: center;
 }
 
 .map-embed {
@@ -33,8 +42,16 @@ html, body {
 
 #btn {
   width: 100%;
-  height: 30px;
-  margin-top: 20px;
+  height: 50px;
   background-color: antiquewhite;
-  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+}
+
+#text-wrapper {
+  background-color: #000;
+  height: auto;
+  padding: 10px;
+  border-radius: 3px;
+  color: #FFF;
 }
