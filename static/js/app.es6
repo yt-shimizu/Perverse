@@ -1,4 +1,35 @@
 $(function() {
+
+    function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie != '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+              var cookie = jQuery.trim(cookies[i]);
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        crossDomain: false, // obviates need for sameOrigin test
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type)) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
     var canvas = $('#map-canvas').get(0);
     var latlng = new google.maps.LatLng(35.792621 , 139.806513);
     var mapOptions = {
@@ -43,7 +74,21 @@ $(function() {
 
                         // 現在位置からの距離が 500m 以内かつ 発見回数が 5回 未満の場合エリア表示
                         if (distance <= 1.5 && val.count < 20) {
-                            var color = val.count < 5 ? '#00CC00' : '#ff0000';
+                            var color = '#ffffff';
+                            switch(true) {
+                                case val.count > 5:
+                                    color = '#FF1493'
+                                break;
+                                case val.count > 4:
+                                    color = '#FFDAB9'
+                                break;
+                                case val.count > 3:
+                                    color = '#FFF8DC'
+                                break;
+                                default:
+                                    color = '#00BFFF'
+                                break;
+                            }
                             var infowindow = new google.maps.InfoWindow({});
                             var marker = new google.maps.Marker({
                                     map: map
