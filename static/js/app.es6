@@ -39,6 +39,15 @@ $(function() {
     var map = new google.maps.Map( canvas , mapOptions ) ;
     var circle_list = new google.maps.MVCArray();
     var current_marker_list = new google.maps.MVCArray();
+    var l = 8;
+
+
+    var str = "abcdefghijklmnopqrstuvwxyz0123456789";
+    var strl = str.length;
+    var code = "";
+    for(var i=0; i<8; i++){
+        code += str[Math.floor(Math.random()*strl)];
+    }
 
     setMarker();
 
@@ -142,7 +151,7 @@ $(function() {
             type: 'POST',
             url: '/app/api/counts/',
             dataType: 'json',
-            data : {spot : spot.id, ipaddr : "127.0.0.1" },
+            data : {spot : spot.id, ipaddr : code },
             success: function (res) {
                 spot.count++;
                 $('#message').html("スポット：" + spot.title + " にたどり着きました！");

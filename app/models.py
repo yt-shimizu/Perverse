@@ -16,5 +16,8 @@ class Count(models.Model):
     spot = models.ForeignKey(Spot, verbose_name='スポット', related_name='spot')
     ipaddr = models.CharField('ipアドレス', max_length=255)
 
+    class Meta:
+        unique_together = (("spot", "ipaddr"),)
+
     def __str__(self):
         return self.ipaddr
